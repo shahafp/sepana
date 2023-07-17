@@ -20,6 +20,9 @@ if 'generated' not in st.session_state:
 if 'past' not in st.session_state:
     st.session_state['past'] = ['Hi!']
 
+if "stored_session" not in st.session_state:
+    st.session_state["stored_session"] = []
+
 # Layout of input/response containers
 # input_container = st.container()
 colored_header(label='', description='', color_name='blue-30')
@@ -38,9 +41,9 @@ def get_text():
 
 
 # Applying the user input box
-# with input_container:
-#     user_input = get_text()
-user_input = st.chat_input()
+with st.container("user"):
+    user_input = get_text()
+# user_input = st.chat_input()
 
 
 # Response output

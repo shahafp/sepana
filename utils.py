@@ -18,7 +18,7 @@ template = """You are assistance that specialized in scenarios generation.
         3. At the day of the meeting, the lawyer apologies and reschedules for next week"
         you keep generating scenarios as long the user gives you his choice"
         Pay attention to answer only with the scenarios with no extra information of explanations, "
-        also make sure you are using enumeration over the scenarios and provide only 3 options"
+        also make sure you are using enumeration over the scenarios and provide only 3 scenarios options"
 
         {history}
         Human: {input}

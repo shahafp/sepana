@@ -41,7 +41,7 @@ def get_text():
 
 
 # Applying the user input box
-with st.container("user"):
+with st.container():
     user_input = get_text()
 # user_input = st.chat_input()
 

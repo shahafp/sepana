@@ -95,17 +95,18 @@ with response_container:
             message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
 
-# Allow to download as well
-download_str = []
-# Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated']) - 1, -1, -1):
-        st.info(st.session_state["past"][i], icon="🧐")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        download_str.append(st.session_state["past"][i])
-        download_str.append(st.session_state["generated"][i])
+if openai_api_key:
+    # Allow to download as well
+    download_str = []
+    # Display the conversation history using an expander, and allow the user to download it
+    with st.expander("Conversation", expanded=True):
+        for i in range(len(st.session_state['generated']) - 1, -1, -1):
+            st.info(st.session_state["past"][i], icon="🧐")
+            st.success(st.session_state["generated"][i], icon="🤖")
+            download_str.extend(st.session_state["past"][i])
+            download_str.extend(st.session_state["generated"][i])
 
-    # Can throw error - requires fix
-    download_str = '\n'.join(download_str)
-    if download_str:
-        st.download_button('Download', download_str)
+        # Can throw error - requires fix
+        download_str = '\n'.join(download_str)
+        if download_str:
+            st.download_button('Download', Conversation.memory.dict())

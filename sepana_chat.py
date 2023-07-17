@@ -7,16 +7,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 st.title('🦜🔗 Sepana Home Assigment')
 
 with st.sidebar:
-    st.title('🤗💬 StarGoChat App')
-    st.markdown('''
-    ## About
-    This app is an LLM-powered chatbot built using:
-    - [Streamlit](https://streamlit.io/)
-    - [HugChat](https://github.com/Soulter/hugging-chat-api)
-    - [OpenAssistant/oasst-sft-6-llama-30b-xor](https://huggingface.co/OpenAssistant/oasst-sft-6-llama-30b-xor) LLM model
-
-    💡 Note: No API key required!
-    ''')
+    st.title('🤗💬 SepanaChat App')
     add_vertical_space(5)
     st.write('Made with ❤️ by Shahaf Pariente')
     openai_api_key = st.sidebar.text_input('OpenAI API Key')
@@ -24,7 +15,7 @@ with st.sidebar:
 # Generate empty lists for generated and past.
 # generated stores AI generated responses
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["I'm HugChat, How may I help you?"]
+    st.session_state['generated'] = ["I'm SepanaChat, How may I help you?"]
 # past stores User's questions
 if 'past' not in st.session_state:
     st.session_state['past'] = ['Hi!']
@@ -41,7 +32,7 @@ def get_text():
     input_text = st.text_input("You: ", "", key="input")
     if not openai_api_key.startswith('sk-'):
         st.warning('Please enter your OpenAI API key!', icon='⚠')
-    if submitted and openai_api_key.startswith('sk-'):
+    if input_text and openai_api_key.startswith('sk-'):
         return input_text
 
 

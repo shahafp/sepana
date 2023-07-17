@@ -25,5 +25,5 @@ template = """You are assistance that specialized in scenarios generation.
         Chatbot:"""
 
 prompt = PromptTemplate(
-    input_variables=["history", "human_input"], template=template
+    input_variables=["history", "input"], template=template
 )

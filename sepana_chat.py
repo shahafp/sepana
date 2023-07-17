@@ -64,7 +64,7 @@ if openai_api_key.startswith('sk-'):
     # Create the ConversationChain object with the specified configuration
     Conversation = ConversationChain(
         llm=llm,
-        prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
+        # prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
         memory=st.session_state.entity_memory
     )
 else:

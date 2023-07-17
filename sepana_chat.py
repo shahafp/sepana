@@ -21,7 +21,8 @@ if 'past' not in st.session_state:
     st.session_state['past'] = ['Hi!']
 
 # Layout of input/response containers
-input_container = st.container()
+input_container = st.empty()
+# input_container = st.container()
 colored_header(label='', description='', color_name='blue-30')
 response_container = st.container()
 
@@ -54,7 +55,7 @@ with response_container:
         response = generate_response(user_input)
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
-        st.container.empty()
+        input_container.empty()
 
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):

@@ -21,7 +21,7 @@ template = """You are assistance that specialized in scenarios generation.
         also make sure you are using enumeration over the scenarios and provide only 3 options"
 
         {history}
-        Human: {human_input}
+        Human: {input}
         Chatbot:"""
 
 prompt = PromptTemplate(

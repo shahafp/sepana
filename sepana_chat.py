@@ -21,7 +21,7 @@ if 'generated' not in st.session_state:
     st.session_state['generated'] = ["I'm SepanaChat, give me your state please :)"]
 # past stores User's questions
 if 'past' not in st.session_state:
-    st.session_state['past'] = ['Hi!']
+    st.session_state['past'] = ["Hi!"]
 
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []

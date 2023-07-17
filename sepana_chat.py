@@ -54,7 +54,7 @@ with response_container:
         response = generate_response(user_input)
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
-        st.empty()
+        input_container.empty()
 
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):

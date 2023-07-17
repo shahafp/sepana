@@ -21,7 +21,6 @@ if 'past' not in st.session_state:
     st.session_state['past'] = ['Hi!']
 
 # Layout of input/response containers
-user_input = st.chat_input()
 # input_container = st.container()
 colored_header(label='', description='', color_name='blue-30')
 response_container = st.container()
@@ -30,7 +29,8 @@ response_container = st.container()
 # User input
 # Function for taking user provided prompt as input
 def get_text():
-    input_text = st.text_input("You: ", "", key="input")
+    # input_text = st.text_input("You: ", "", key="input")
+    input_text = st.chat_input()
     if not openai_api_key.startswith('sk-'):
         st.warning('Please enter your OpenAI API key!', icon='⚠')
     if input_text and openai_api_key.startswith('sk-'):
@@ -40,6 +40,7 @@ def get_text():
 # Applying the user input box
 # with input_container:
 #     user_input = get_text()
+user_input = st.chat_input()
 
 
 # Response output

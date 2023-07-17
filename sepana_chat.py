@@ -68,7 +68,6 @@ if openai_api_key.startswith('sk-'):
         llm=llm,
         prompt=utils.prompt,
         memory=st.session_state.entity_memory,
-        ai_prefix="AI Chatbot"
     )
 else:
     st.markdown(''' 

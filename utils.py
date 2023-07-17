@@ -20,10 +20,10 @@ template = """You are assistance that specialized in scenarios generation.
         Pay attention to answer only with the scenarios with no extra information of explanations, "
         also make sure you are using enumeration over the scenarios and provide only 3 options"
 
-        {chat_history}
+        {history}
         Human: {human_input}
         Chatbot:"""
 
 prompt = PromptTemplate(
-    input_variables=["chat_history", "human_input"], template=template
+    input_variables=["history", "human_input"], template=template
 )

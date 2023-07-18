@@ -2,7 +2,7 @@ import re
 
 import streamlit as st
 from langchain import ConversationChain
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from streamlit_chat import message
 from streamlit_extras.add_vertical_space import add_vertical_space
@@ -36,10 +36,10 @@ response_container = st.container()
 
 if openai_api_key.startswith('sk-'):
     # Create an OpenAI instance
-    llm = OpenAI(temperature=0,
-                 openai_api_key=openai_api_key,
-                 model_name='gpt-3.5-turbo',
-                 verbose=False)
+    llm = ChatOpenAI(temperature=0,
+                     openai_api_key=openai_api_key,
+                     model_name='gpt-3.5-turbo',
+                     verbose=False)
 
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
@@ -108,7 +108,7 @@ def generate_response(input_text):
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
     if user_input:
-        response = generate_response(user_input) if re.search(r"\bend\b", 'end', re.IGNORECASE) else 'Thank you!'
+        response = generate_response(user_input) if not re.search(r"\bend\b", 'end', re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
 

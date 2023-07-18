@@ -108,7 +108,7 @@ def generate_response(input_text):
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
     if user_input:
-        response = generate_response(user_input) if not re.search(r"\bend\b", 'end', re.IGNORECASE) else 'Thank you!'
+        response = generate_response(user_input) if not re.search(r"\bend\b", user_input, re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
 

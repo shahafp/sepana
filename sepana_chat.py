@@ -1,3 +1,5 @@
+import re
+
 import streamlit as st
 from langchain import ConversationChain
 from langchain.llms import OpenAI
@@ -106,7 +108,7 @@ def generate_response(input_text):
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
     if user_input:
-        response = generate_response(user_input) if 'end' not in user_input.lower() else 'Thank you!'
+        response = generate_response(user_input) if re.search(r"\bend\b", 'end', re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
 

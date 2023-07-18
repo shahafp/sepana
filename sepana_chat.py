@@ -1,11 +1,10 @@
 import streamlit as st
-from langchain import ConversationChain, PromptTemplate
+from langchain import ConversationChain
 from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain.memory.prompt import ENTITY_MEMORY_CONVERSATION_TEMPLATE
 from streamlit_chat import message
-from streamlit_extras.colored_header import colored_header
 from streamlit_extras.add_vertical_space import add_vertical_space
+from streamlit_extras.colored_header import colored_header
 
 import utils
 
@@ -107,7 +106,7 @@ def generate_response(input_text):
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
     if user_input:
-        response = generate_response(user_input) if user_input != 'END' else 'Thank you!'
+        response = generate_response(user_input) if 'end' not in user_input.lower() else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
 
@@ -116,7 +115,7 @@ with response_container:
             message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
 
-# if openai_api_key and Conversation:
+# if openai_api_key:
 #     # Allow to download as well
 #     download_str = []
 #     # Display the conversation history using an expander, and allow the user to download it
@@ -129,5 +128,5 @@ with response_container:
 #
 #         # Can throw error - requires fix
 #         download_str = '\n'.join(download_str)
-#         if download_str:
-#             st.download_button('Download', Conversation.memory.dict())
+#         # if download_str:
+#         #     st.download_button('Download', Conversation.memory.dict())

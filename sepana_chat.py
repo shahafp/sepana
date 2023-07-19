@@ -19,6 +19,15 @@ with st.sidebar:
     st.write('Made with ❤️ by Shahaf Pariente')
     openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
+    st.session_state.auto_user_button = st.button("Auto User :rocket:")
+    st.write("Start auto user")
+    st.write("Train your user before hit the Auto User button")
+    st.write(st.session_state.auto_user_button)
+    if st.session_state.auto_user_button:
+        st.session_state.button_state = True
+        st.session_state.auto_user_conv.memory.chat_memory.add_user_message("This is the end of the Human examples, "
+                                                                             "pay attention when the Human ended the chats, now it is your time to shine and answer like you are the Human")
+
 # Generate empty lists for generated and past.
 # generated stores AI generated responses
 if 'generated' not in st.session_state:
@@ -74,7 +83,7 @@ else:
         ```
 
         ''')
-    st.sidebar.warning('API key required to try this app.The API key is not stored in any form.')
+    # st.sidebar.warning('API key required to try this app.The API key is not stored in any form.')
 
 
 # Function for taking user provided prompt as input
@@ -98,14 +107,23 @@ def generate_response(input_text):
     return Conversation.run(input=input_text)
 
 
+def generate_auto_user(input_text):
+    return st.session_state.auto_user_conv.run(input=input_text)
+
+
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
-    if user_input:
+    if user_input and not st.session_state.button_state:
         response = generate_response(user_input) if not re.search(r"\bend\b", user_input, re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
         st.session_state.auto_user_conv.memory.chat_memory.add_user_message(user_input)
         st.session_state.auto_user_conv.memory.chat_memory.add_ai_message(response)
+
+    elif user_input and st.session_state.button_state:
+        # To run the Conversational between 2 bots we need a loop that iterate over the responses
+        st.session_state.index = 1
+        auto_user.auto_user_loop(st=st, user_input=user_input, generate_response=generate_response, generate_auto_user=generate_auto_user)
 
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):

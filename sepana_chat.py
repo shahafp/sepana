@@ -8,6 +8,7 @@ from streamlit_chat import message
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.colored_header import colored_header
 
+import auto_user
 import utils
 
 st.title('🦜🔗 Sepana Home Assigment')
@@ -36,32 +37,21 @@ response_container = st.container()
 
 if openai_api_key.startswith('sk-'):
     # Create an OpenAI instance
-    llm = ChatOpenAI(temperature=0,
+    llm = ChatOpenAI(temperature=0.4,
                      openai_api_key=openai_api_key,
                      model_name='gpt-3.5-turbo',
                      verbose=False)
 
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
-        entity_memory = ConversationBufferMemory(llm=llm, k=5)
-        # entity_memory.chat_memory.add_ai_message("You are assistance that specialized in scenarios generation")
-        # entity_memory.chat_memory.add_ai_message("You goal is to create 3 different scenarios for a given state\n"
-        #                                          "for example: Citizen K receives from her friend a phone number of a real estate lawyer."
-        #                                          " She calls him, introduces herself and provides a brief explanation of what real estate she’s planning on purchasing:"
-        #                                          " A nice apartment in her neighborhood with an initial price quote of $0.5M. "
-        #                                          "She wants the lawyer to administer a background check and confirm that all the property papers look clean and she can proceed with the price negotiations")
-        # entity_memory.chat_memory.add_ai_message("and the 3 options might be: "
-        #                                          "1.The lawyer rejects this because the deal is too small and is not worth the hurdle"
-        #                                          "2.The lawyer says he can take the project for the price of 1.5% of the property value. The expected due diligence period is 1 month. They schedule a face to face meeting for next week."
-        #                                          "3.The lawyer request that they meet face to face and look at the price quote and some initial property papers"
-        #                                          "The user will choose one of the options, once the user chose you need to generate 3 more scenarios"
-        #                                          "In this case the user choose 2 then you can generate the next scenarios"
-        #                                          "1. They meet at the lawyer’s office and sign an initial standard agreement"
-        #                                          "2. They meet at a caffe and the lawyer says he is too busy and the expected due diligence will take 2 months instead of one"
-        #                                          "3. At the day of the meeting, the lawyer apologies and reschedules for next week"
-        #                                          "you keep generating scenarios as long the user gives you his choice"
-        #                                          "Pay attention to answer only with the scenarios with no extra information of explanations, "
-        #                                          "also make sure you are using enumeration over the scenarios!")
+        entity_memory = ConversationBufferMemory(llm=llm)
+        entity_memory.chat_memory.add_user_message(utils.SCENARIO_EXAMPLE)
+        entity_memory.chat_memory.add_ai_message(utils.FIRST_OPTIONS)
+        entity_memory.chat_memory.add_user_message(utils.USER_FIRST_CHOICE)
+        entity_memory.chat_memory.add_ai_message(utils.SECOND_OPTIONS)
+        entity_memory.chat_memory.add_user_message(utils.USER_SECOND_CHOICE)
+        entity_memory.chat_memory.add_ai_message(utils.FINAL_OPTIONS)
+        entity_memory.chat_memory.add_user_message(utils.USER_THIRD_CHOICE)
         st.session_state.entity_memory = entity_memory
 
     # Create the ConversationChain object with the specified configuration
@@ -70,6 +60,9 @@ if openai_api_key.startswith('sk-'):
         prompt=utils.prompt,
         memory=st.session_state.entity_memory,
     )
+
+    auto_user_conv = auto_user.get_conversation_chain(llm)
+    st.session_state.auto_user_conv = auto_user_conv
 else:
     st.markdown(''' 
         ```
@@ -111,24 +104,10 @@ with response_container:
         response = generate_response(user_input) if not re.search(r"\bend\b", user_input, re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
+        st.session_state.auto_user_conv.memory.chat_memory.add_user_message(user_input)
+        st.session_state.auto_user_conv.memory.chat_memory.add_ai_message(response)
 
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
-
-# if openai_api_key:
-#     # Allow to download as well
-#     download_str = []
-#     # Display the conversation history using an expander, and allow the user to download it
-#     with st.expander("Conversation", expanded=True):
-#         for i in range(len(st.session_state['generated']) - 1, -1, -1):
-#             st.info(st.session_state["past"][i], icon="🧐")
-#             st.success(st.session_state["generated"][i], icon="🤖")
-#             download_str.extend(st.session_state["past"][i])
-#             download_str.extend(st.session_state["generated"][i])
-#
-#         # Can throw error - requires fix
-#         download_str = '\n'.join(download_str)
-#         # if download_str:
-#         #     st.download_button('Download', Conversation.memory.dict())

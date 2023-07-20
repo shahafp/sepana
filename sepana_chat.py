@@ -23,6 +23,7 @@ with st.sidebar:
     st.write("Start auto user")
     st.write("Train your user before hit the Auto User button")
     st.write(st.session_state.auto_user_button)
+    st.session_state.button_state = False
     if st.session_state.auto_user_button:
         st.session_state.button_state = True
         st.session_state.auto_user_conv.memory.chat_memory.add_user_message("This is the end of the Human examples, "

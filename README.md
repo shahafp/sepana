@@ -34,6 +34,7 @@ Enter your OpenAI key: it does not save the key (I promise :) )
 
 In the main screen you will see a welcome messages.
 Insert in the chat line your scenario and start chatting 
+
 ![Chatbot Demo](main.png)
 
 Some example scenarios for you:
@@ -61,6 +62,7 @@ It foes not matter the order of the things. for example: 2 END or END 2
 
 ## Auto User
 Once you fill you gave enough examples you can use the AutoUser button
+
 ![Chatbot Demo](auto_user.png)
 
 Then provide a new scenario in the text box and wait, it is initializing some parameters,

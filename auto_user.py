@@ -28,7 +28,7 @@ def auto_user_loop(st, user_input, generate_response, generate_auto_user):
         st.session_state.past.append(user_input)
         if st.session_state['generated']:
             message(st.session_state['past'][st.session_state.index], is_user=True, key=str(st.session_state.index) + '_auto_user')
-            message(st.session_state["generated"][st.session_state.index], key=str(st.session_state.index))
+            message(st.session_state["generated"][st.session_state.index], key=str(st.session_state.index) + '_auto')
             st.session_state.index += 1
         sleep(1)
         if re.search(r"\bend\b", user_input, re.IGNORECASE):

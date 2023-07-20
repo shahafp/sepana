@@ -23,11 +23,11 @@ with st.sidebar:
     st.write("Start auto user")
     st.write("Train your user before hit the Auto User button")
     st.write(st.session_state.auto_user_button)
-    st.session_state.button_state = False
+
     if st.session_state.auto_user_button:
         st.session_state.button_state = True
         st.session_state.auto_user_conv.memory.chat_memory.add_user_message("This is the end of the Human examples, "
-                                                                             "pay attention when the Human ended the chats, now it is your time to shine and answer like you are the Human")
+                                                                            "pay attention when the Human ended the chats, now it is your time to shine and answer like you are the Human")
 
 # Generate empty lists for generated and past.
 # generated stores AI generated responses
@@ -114,7 +114,7 @@ def generate_auto_user(input_text):
 
 # Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
-    if user_input and not st.session_state.button_state:
+    if user_input and 'button_state' not in st.session_state:
         response = generate_response(user_input) if not re.search(r"\bend\b", user_input, re.IGNORECASE) else 'Thank you!'
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
@@ -124,7 +124,8 @@ with response_container:
     elif user_input and st.session_state.button_state:
         # To run the Conversational between 2 bots we need a loop that iterate over the responses
         st.session_state.index = 1
-        auto_user.auto_user_loop(st=st, user_input=user_input, generate_response=generate_response, generate_auto_user=generate_auto_user)
+        return_val = auto_user.auto_user_loop(st=st, user_input=user_input, generate_response=generate_response, generate_auto_user=generate_auto_user)
+        st.session_state.generated.append(return_val)
 
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):

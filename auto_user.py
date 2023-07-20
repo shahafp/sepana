@@ -34,3 +34,4 @@ def auto_user_loop(st, user_input, generate_response, generate_auto_user):
         if re.search(r"\bend\b", user_input, re.IGNORECASE):
             print('finish', user_input)
             break
+    return 'Thank you for using our chatbot!'

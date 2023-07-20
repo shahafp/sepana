@@ -6,8 +6,8 @@
 #
 # import utils
 #
-# llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo-0613', openai_api_key='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')
-# llm_user = ChatOpenAI(temperature=0.7, model='gpt-3.5-turbo-0613', openai_api_key='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')
+# llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo-0613', openai_api_key=)
+# llm_user = ChatOpenAI(temperature=0.7, model='gpt-3.5-turbo-0613', openai_api_key=)
 #
 # memory = ConversationBufferMemory()
 #

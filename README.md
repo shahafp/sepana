@@ -29,6 +29,7 @@ git clone https://github.com/shahafp/sepana.git
 # How To:
 
 Enter your OpenAI key: it does not save the key (I promise :) )
+
 ![Chatbot Demo](key.png)
 
 In the main screen you will see a welcome messages.

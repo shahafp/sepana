@@ -32,7 +32,7 @@ with st.sidebar:
 # Generate empty lists for generated and past.
 # generated stores AI generated responses
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["I'm SepanaChat, give me your state please :)"]
+    st.session_state['generated'] = ["I'm SepanaChat, give me your scenario please :)"]
 # past stores User's questions
 if 'past' not in st.session_state:
     st.session_state['past'] = ["Hi!"]

@@ -16,6 +16,10 @@ Additionally, the chatbot employs a machine learning model that learns from the 
 - Utilizes a machine learning model to learn from the user's behavior.
 - Transitions to a new bot that provides personalized responses based on user interactions.
 
+# Link
+
+https://sepana-home.streamlit.app/
+
 ## Installation
 
 To use the Sepana home assignment chatbot, follow these steps:

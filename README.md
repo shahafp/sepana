@@ -16,6 +16,14 @@ Additionally, the chatbot employs a machine learning model that learns from the 
 - Utilizes a machine learning model to learn from the user's behavior.
 - Transitions to a new bot that provides personalized responses based on user interactions.
 
+# Logic
+Generate the scenario logic: for the task of getting a scrnario, then generate a proper states based on the forst state or based on the user answer, I used a chat model gpt-turbo-3.5 which recived a system message with the proper instructions and an example of usage.
+with the right chain of thought i manged to get the desired results.
+Learn the user behavior: I have used Conversational memory buffer for the state generator bot, after dine several manual scenarios with the user I took the memory and created a new chat bot that knows all the previous conversation. Then with a proper system message and chain of tought messages I mange to teach the chat bot to learn how the human is acting through the states and when the user wants to end the conv.
+
+# Prompts
+all the prompts are located in the utils script 
+
 # Link
 
 https://sepana-home.streamlit.app/
